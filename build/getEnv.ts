@@ -30,9 +30,7 @@ export function wrapperEnv(envConf: Recordable): ViteEnv {
     if (envName === 'VITE_PROXY') {
       try {
         realName = JSON.parse(realName);
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     }
     ret[envName] = realName;
   }
