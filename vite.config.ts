@@ -3,6 +3,7 @@ import path from 'path';
 import { wrapperEnv } from './build/getEnv';
 import { createProxy } from './build/proxy';
 import { createVitePlugins } from './build/plugin';
+import pxToRem from 'postcss-pxtorem';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
@@ -17,7 +18,17 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       alias: {
         '@': path.resolve(__dirname, 'src')
       },
-      extensions: ['.js', '.json', '.ts', '.vue']
+      extensions: ['.mjs', '.js', '.json', '.ts', '.vue']
+    },
+    css: {
+      postcss: {
+        plugins: [
+          pxToRem({
+            rootValue: 37.5,
+            propList: ['*']
+          })
+        ]
+      }
     },
     server: {
       host: '0.0.0.0',

@@ -2,6 +2,7 @@ import axios, { AxiosInstance, AxiosRequestConfig, InternalAxiosRequestConfig, A
 import { ResultEnum } from './config/httpEnum';
 import router from '@/router';
 import { ResultData } from './interface/index';
+import { useGlobalStore } from '@/stores/modules/global';
 
 export interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
   noLoading?: boolean;
@@ -15,7 +16,6 @@ const config = {
   // 跨域允许携带凭证
   withCredentials: true
 };
-
 class RequestHttp {
   service: AxiosInstance;
   public constructor(config: AxiosRequestConfig) {
@@ -24,8 +24,15 @@ class RequestHttp {
     // 请求拦截器
     this.service.interceptors.request.use(
       (config: CustomAxiosRequestConfig) => {
+        const safeList = ['/user_info', '/user_update', '/store', '/store_remove', '/store_list'];
+        const token = useGlobalStore().token;
         if (config.headers && typeof config.headers.set === 'function') {
-          config.headers.set('x-access-token', 'setToken');
+          if (safeList.includes(config.url!)) {
+            config.headers.set('authorization', token);
+          }
+        }
+        if (config.method === 'post') {
+          config.headers.set('Content-Type', 'application/x-www-form-urlencoded');
         }
         return config;
       },
@@ -51,10 +58,10 @@ class RequestHttp {
   }
 
   // 封装常用的请求
-  get<T>(url: string, params?: object, _object = {}): Promise<ResultData<T>> {
+  get<T>(url: string, params?: object, _object = {}): Promise<T> {
     return this.service.get(url, { params, ..._object });
   }
-  post<T>(url: string, params?: object | string, _object = {}): Promise<ResultData<T>> {
+  post<T>(url: string, params?: object | string, _object = {}): Promise<T> {
     return this.service.post(url, params, _object);
   }
   put<T>(url: string, params?: object, _object = {}): Promise<ResultData<T>> {

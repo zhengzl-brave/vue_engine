@@ -1,7 +1,7 @@
 import { PluginOption } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import Components from 'unplugin-vue-components/vite';
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
+import { ElementPlusResolver, VantResolver } from 'unplugin-vue-components/resolvers';
 import AutoImport from 'unplugin-auto-import/vite';
 import eslintPlugin from 'vite-plugin-eslint';
 
@@ -11,6 +11,9 @@ const AutoRegistryComponents = () => {
     resolvers: [
       ElementPlusResolver({
         importStyle: true
+      }),
+      VantResolver({
+        importStyle: false
       })
     ],
     dts: 'src/typings/components.d.ts',

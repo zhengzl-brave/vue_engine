@@ -7,7 +7,25 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    RouterLink: typeof import('vue-router')['RouterLink']
-    RouterView: typeof import('vue-router')['RouterView']
+    ElCarousel: typeof import('element-plus/es')['ElCarousel'];
+    ElCarouselItem: typeof import('element-plus/es')['ElCarouselItem'];
+    ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider'];
+    Header: typeof import('./../components/Header/index.vue')['default'];
+    NavBar: typeof import('./../components/NavBar/index.vue')['default'];
+    NewsItem: typeof import('./../components/NewsItem/index.vue')['default'];
+    RouterLink: typeof import('vue-router')['RouterLink'];
+    RouterView: typeof import('vue-router')['RouterView'];
+    VanButton: typeof import('vant/es')['Button'];
+    VanCellGroup: typeof import('vant/es')['CellGroup'];
+    VanDivider: typeof import('vant/es')['Divider'];
+    VanField: typeof import('vant/es')['Field'];
+    VanForm: typeof import('vant/es')['Form'];
+    VanIcon: typeof import('vant/es')['Icon'];
+    VanLoading: typeof import('vant/es')['Loading'];
+    VanNavBar: typeof import('vant/es')['NavBar'];
+    VanSwipe: typeof import('vant/es')['Swipe'];
+    VanSwipeCell: typeof import('vant/es')['SwipeCell'];
+    VanSwipeItem: typeof import('vant/es')['SwipeItem'];
+    VanUploader: typeof import('vant/es')['Uploader'];
   }
 }
